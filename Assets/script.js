@@ -9,20 +9,21 @@ let questions = [
   },
   {
     title: "Who lives in a pineapple under the sea?",
-    choices: ["Patrick", "Sandy", "Squidward", "Spongebob Square Pants"],
+    choices: ["Patrick", "Sandy", "Squidward", "Spongebob SquarePants"],
+    // Fixed: the answer had a different spelling than the choice
     answer: "Spongebob SquarePants",
   },
 
   {
-    title: "What are the objects in JavaScript?",
-    choices: ["Boolean", "Undefined", "Number", "String"],
-    answer: "Boolean",
+    title: "Where would you look if I told you to find me a Beozar?",
+    choices: ["In a pupmkin patch", "In the stomach of a goat", "London", "Walmart"],
+    answer: "In the stomach of a goat",
   },
 
   {
-    title: "What are the objects in JavaScript?",
-    choices: ["Boolean", "Undefined", "Number", "String"],
-    answer: "Boolean",
+    title: "What do you type in JavaScript to indentify an ID in the HTML file?",
+    choices: ["$", ".", "#", ":)"],
+    answer: "#",
   },
 ];
 
@@ -36,6 +37,7 @@ let questionsIndex = 0;
 let score = 0;
 
 // Functions
+
 function startQuiz() {
   // Bring up question 1
   let title = document.createElement("h2");
@@ -80,40 +82,54 @@ function startQuiz() {
   button3.addEventListener("click", selectAnswer);
   button4.addEventListener("click", selectAnswer);
 }
-// A function to register an answer
+
 function selectAnswer() {
-  let currentQuestion = questions[questionsIndex++];
-
-  // let title = document.createElement("h2");
-  // title.textContent = questions[questionsIndex].title;
-  // questionDiv.appendChild(title);
-
-  // let btnOne = document.createElement("button");
-  // btnOne.textContent = questions[questionsIndex].choices[0];
-  // questionDiv.appendChild(btnOne);
-
-  // let btnTwo = document.createElement("button");
-  // btnTwo.textContent = questions[questionsIndex].choices[1];
-
-  // questionDiv.appendChild(btnTwo);
-
-  // let btnThree = document.createElement("button");
-  // btnThree.textContent = questions[questionsIndex].choices[2];
-
-  // questionDiv.appendChild(btnThree);
-
-  // let btnFour = document.createElement("button");
-  // btnFour.textContent = questions[questionsIndex].choices[3];
-
-  // questionDiv.appendChild(btnFour);
-
+  // compare user choice to correct answer
   if (this.textContent === questions[questionsIndex].answer) {
-    currentQuestion++;
+    // if correct, increase index by one
+    questionsIndex++;
+    // call function to generate next question
+    generateNextQuestion();
   } else {
     alert("wrong!");
   }
 }
 
-// Function Calls
+function generateNextQuestion() {
+  // Note: this variable is introduced but never used. This variable would be helpful if you end up using a loop to generate question/answers.
+  let currentQuestion = questions[questionsIndex];
+
+  let title = document.createElement("h2");
+  title.textContent = questions[questionsIndex].title;
+  questionDiv.appendChild(title);
+
+  let btnFive = document.createElement("button");
+  btnFive.textContent = questions[questionsIndex].choices[0];
+  questionDiv.appendChild(btnFive);
+
+  let btnSix = document.createElement("button");
+  btnSix.textContent = questions[questionsIndex].choices[1];
+
+  questionDiv.appendChild(btnSix);
+
+  let btnSeven = document.createElement("button");
+  btnSeven.textContent = questions[questionsIndex].choices[2];
+
+  questionDiv.appendChild(btnSeven);
+
+  let btnEight = document.createElement("button");
+  btnEight.textContent = questions[questionsIndex].choices[3];
+
+  questionDiv.appendChild(btnEight);
+
+  // You do not need to add a class to the created element and then add an event listener to the class
+  // You can add the event listener directly to the original variable you assigned the created element
+  btnFive.addEventListener("click", selectAnswer);
+  btnSix.addEventListener("click", selectAnswer);
+  btnSeven.addEventListener("click", selectAnswer);
+  btnEight.addEventListener("click", selectAnswer);
+}
+
+// Event Listener
 
 startQuizbtn.addEventListener("click", startQuiz);
