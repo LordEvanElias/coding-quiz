@@ -1,6 +1,9 @@
 // Global Variables
+let saveScore = document.querySelector("#saveInitials");
 let startQuizbtn = document.querySelector("#startQuiz");
 let questionDiv = document.querySelector("#questions");
+let timerDiv = document.querySelector("#timer");
+let showScores = document.querySelector("#showScores");
 let questions = [
   {
     title: "What is the B in BUNSO?",
@@ -16,7 +19,7 @@ let questions = [
 
   {
     title: "Where would you look if I told you to find me a Beozar?",
-    choices: ["In a pupmkin patch", "In the stomach of a goat", "London", "Walmart"],
+    choices: ["In a pumpkin patch", "In the stomach of a goat", "London", "Walmart"],
     answer: "In the stomach of a goat",
   },
 
@@ -26,6 +29,7 @@ let questions = [
     answer: "#",
   },
 ];
+let scores = JSON.parse(localStorage.getItem("scores")) || [];
 
 let button1;
 let button2;
@@ -33,12 +37,18 @@ let button3;
 let button4;
 
 let questionsIndex = 0;
-
+let time = 60;
+let timer = 0;
 let score = 0;
-
 // Functions
 
 function startQuiz() {
+  // Start Timer
+  timer = setInterval(function () {
+    time--;
+    timerDiv.innerHTML = time;
+  }, 1000);
+
   // Bring up question 1
   let title = document.createElement("h2");
   title.textContent = questions[questionsIndex].title;
@@ -77,10 +87,14 @@ function startQuiz() {
   btnFour.classList.add("button4");
   button4 = document.querySelector(".button4");
 
-  button1.addEventListener("click", selectAnswer);
-  button2.addEventListener("click", selectAnswer);
-  button3.addEventListener("click", selectAnswer);
-  button4.addEventListener("click", selectAnswer);
+  button1.addEventListener("click", selectAnswer, clearPrevious);
+  button2.addEventListener("click", selectAnswer, clearPrevious);
+  button3.addEventListener("click", selectAnswer, clearPrevious);
+  button4.addEventListener("click", selectAnswer, clearPrevious);
+}
+
+function clearPrevious() {
+  // Clears previous question on answer.
 }
 
 function selectAnswer() {
@@ -89,14 +103,25 @@ function selectAnswer() {
     // if correct, increase index by one
     questionsIndex++;
     // call function to generate next question
-    generateNextQuestion();
+    if (questionsIndex > questions.length - 1) {
+      alert("Game Over!");
+      score = time;
+      clearInterval(timer);
+      // Ask user for initials and save their score.
+    } else {
+      generateNextQuestion();
+    }
   } else {
-    alert("wrong!");
+    // Create an h2 that says correct or incorrect instead of an alert
+    alert("Wrong!");
   }
 }
 
 function generateNextQuestion() {
   // Note: this variable is introduced but never used. This variable would be helpful if you end up using a loop to generate question/answers.
+
+  // Need something that clears previous question and replaces it with the next one.
+
   let currentQuestion = questions[questionsIndex];
 
   let title = document.createElement("h2");
@@ -130,6 +155,25 @@ function generateNextQuestion() {
   btnEight.addEventListener("click", selectAnswer);
 }
 
+function enterScore() {
+  let initials = document.querySelector("#initials").value;
+  let userScore = {
+    initials: initials,
+    score: score,
+  };
+
+  scores.push(userScore);
+  localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+function displayScores(event) {
+  event.preventDefault();
+  scores.forEach((scr) => {
+    showScores.innerHTML += `${scr.initials}: ${scr.score} <br>`;
+  });
+}
 // Event Listener
 
 startQuizbtn.addEventListener("click", startQuiz);
+saveScore.addEventListener("click", enterScore);
+viewScores.addEventListener("click", displayScores);
