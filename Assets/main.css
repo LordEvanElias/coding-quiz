@@ -1,8 +1,27 @@
-head,body,footer {
-    background-color: black;
+@import url('https://fonts.googleapis.com/css2?family=Mystery+Quest&display=swap');
+html {
+    height: 100%;
 }
- 
 
+body {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image:url(./Images/Dungeon\ Wall\ Background.jpg);
+    font-family:  'Mystery Quest', cursive;
+}
+
+ 
+h2 {
+    flex: auto;
+    justify-content: center;
+    border: 5px;
+    border-radius: 6px;
+    border-color: white;
+    margin:auto
+    
+}
 
 
 

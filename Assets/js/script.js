@@ -4,6 +4,7 @@ let startQuizbtn = document.querySelector("#startQuiz");
 let questionDiv = document.querySelector("#questions");
 let timerDiv = document.querySelector("#timer");
 let showScores = document.querySelector("#showScores");
+let resultDiv = document.querySelector("#results");
 let questions = [
   {
     title: "What is the B in BUNSO?",
@@ -44,6 +45,11 @@ let score = 0;
 
 function startQuiz() {
   // Start Timer
+  questionDiv.innerHTML = "";
+  questionsIndex = 0;
+  time = 60;
+  timer = 0;
+  score = 0;
   timer = setInterval(function () {
     time--;
     timerDiv.innerHTML = time;
@@ -109,17 +115,18 @@ function selectAnswer() {
       clearInterval(timer);
       // Ask user for initials and save their score.
     } else {
+      questionDiv.innerHTML = "";
       generateNextQuestion();
     }
   } else {
-    // Create an h2 that says correct or incorrect instead of an alert
-    alert("Wrong!");
+    // GET HELP!!! Create an h2 that says correct or incorrect instead of an alert
+    let result = document.createElement("h3");
+    result.textContent = "Incorrect";
+    questionDiv.appendChild(result);
   }
 }
 
 function generateNextQuestion() {
-  // Note: this variable is introduced but never used. This variable would be helpful if you end up using a loop to generate question/answers.
-
   // Need something that clears previous question and replaces it with the next one.
 
   let currentQuestion = questions[questionsIndex];
@@ -176,4 +183,4 @@ function displayScores(event) {
 
 startQuizbtn.addEventListener("click", startQuiz);
 saveScore.addEventListener("click", enterScore);
-viewScores.addEventListener("click", displayScores);
+// viewScores.addEventListener("click", displayScores);
