@@ -4,7 +4,6 @@ let startQuizbtn = document.querySelector("#startQuiz");
 let questionDiv = document.querySelector("#questions");
 let timerDiv = document.querySelector("#timer");
 let inputScores = document.querySelector("#scoreInput");
-let viewScores = document.querySelector("#showScores");
 let resultDiv = document.querySelector("#results");
 
 let questions = [
@@ -203,14 +202,8 @@ function enterScore() {
 
   for (let i = 0; i < scoreBoard.length; i++) {
     let paragraph = document.createElement("p");
-    paragraph.innerHTML = scoreBoard[i].initials;
+    paragraph.innerHTML = `${scoreBoard[i].score} ${scoreBoard[i].initials}`;
     showInitials.appendChild(paragraph);
-  }
-
-  for (let i = 0; i < scoreBoard.length; i++) {
-    let paragraph2 = document.createElement("p");
-    paragraph2.innerHTML = scoreBoard[i].score;
-    viewScores.appendChild(score);
   }
 }
 
