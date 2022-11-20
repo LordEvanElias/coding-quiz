@@ -13,30 +13,31 @@
 
 <body>
     <header>
-        <a href="highscores" id="viewHighscores">View Highscores</a>
         <div id="timer">60</div>
     </header>
-    <!-- Title -->
-    <div class="quizBox">
-        <h1>Harry Potter Trivia</h1>
-        <!-- Paragraph about the game -->
-        <p>How much do you know? Find out!</p>
-        <!-- Start Button -->
-        <!-- Quiz starts after button click. -->
+    <div class="quizContainer">
+        <!-- Title -->
+        <div class="quizBox">
+            <h1>JavaScript Coding Quiz</h1>
+            <!-- Paragraph about the game -->
+            <p>How much do you know? Find out!</p>
+            <!-- Start Button -->
+            <!-- Quiz starts after button click. -->
 
-        <button id="startQuiz">Start Quiz </button>
-        <!-- Attach Questions Here -->
+            <button id="startQuiz">Start Quiz </button>
+            <!-- Attach Questions Here -->
+        </div>
         <div id='questions'>
 
         </div>
+        <!-- Input for highscore -->
+        <div id="scoreInput">
+            <p>Enter your intials to record your score</p>
+            <input id="initials" type="text">
+            <button id="saveInitials">Save</button>
+        </div>
+        <div id="showInitials" id="showScores"></div>
     </div>
-    <!-- Input for highscore -->
-    <div class="scoreInput">
-        <p>Enter your intials to record your score</p>
-        <input id="initials" type="text">
-        <button id="saveInitials">Save</button>
-    </div>
-    <div id="showScores"></div>
     <script src="./assets/js/script.js"></script>
 </body>
 

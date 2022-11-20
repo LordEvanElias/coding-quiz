@@ -3,8 +3,10 @@ let saveScore = document.querySelector("#saveInitials");
 let startQuizbtn = document.querySelector("#startQuiz");
 let questionDiv = document.querySelector("#questions");
 let timerDiv = document.querySelector("#timer");
-let showScores = document.querySelector("#showScores");
+let inputScores = document.querySelector("#scoreInput");
+let viewScores = document.querySelector("#showScores");
 let resultDiv = document.querySelector("#results");
+
 let questions = [
   {
     title: "What is the B in BUNSO?",
@@ -12,24 +14,43 @@ let questions = [
     answer: "Boolean",
   },
   {
-    title: "Who lives in a pineapple under the sea?",
-    choices: ["Patrick", "Sandy", "Squidward", "Spongebob SquarePants"],
+    title: "How do you create a function in JavaScript?",
+    choices: ["function = newFunction", "function:newFunction", "function.newFunction", "function newFunction()"],
     // Fixed: the answer had a different spelling than the choice
-    answer: "Spongebob SquarePants",
+    answer: "function newFunction()",
   },
 
   {
-    title: "Where would you look if I told you to find me a Beozar?",
-    choices: ["In a pumpkin patch", "In the stomach of a goat", "London", "Walmart"],
-    answer: "In the stomach of a goat",
+    title: "Which is the correct way to write an IF statement in JS?",
+    choices: ["if (i === 5){}", "if i=5 then", "if i === 5 then", "if i === 5 {}"],
+    answer: "if (i === 5){}",
   },
 
   {
-    title: "What do you type in JavaScript to indentify an ID in the HTML file?",
+    title: "What is the propper way to comment in JS?",
+    choices: ["//Look at me, I'm a comment!", "<--Look at me, I'm a comment!-->", "/*Look at me, I'm a comment!*/", "`Look at me, I'm a comment!`"],
+    answer: "//Look at me, I'm a comment!",
+  },
+
+  {
+    title: "What do you type in JavaScript to indentify an class in the HTML file?",
     choices: ["$", ".", "#", ":)"],
-    answer: "#",
+    answer: ".",
+  },
+
+  {
+    title: "How does a FOR loop start?",
+    choices: ["for (i = 0; i <= 6; i++)", "for i = 1-6", "for (i <=6; i++)", "for (i = 0; i<=6)"],
+    answer: "for (i = 0; i <= 6; i++)",
+  },
+
+  {
+    title: "How do you save data in local storage in JS?",
+    choices: ["localStorage.saveItem(item)", "localStorage.setItem(`item`, item)", "localStorage.item", "localStorage.getItem(`item`, item)"],
+    answer: "localStorage.setItem(`item`, item)",
   },
 ];
+
 let scores = JSON.parse(localStorage.getItem("scores")) || [];
 
 let button1;
@@ -41,6 +62,7 @@ let questionsIndex = 0;
 let time = 60;
 let timer = 0;
 let score = 0;
+
 // Functions
 
 function startQuiz() {
@@ -97,6 +119,8 @@ function startQuiz() {
   button2.addEventListener("click", selectAnswer, clearPrevious);
   button3.addEventListener("click", selectAnswer, clearPrevious);
   button4.addEventListener("click", selectAnswer, clearPrevious);
+
+  questionDiv.classList.add("questionBox");
 }
 
 function clearPrevious() {
@@ -113,13 +137,16 @@ function selectAnswer() {
       alert("Game Over!");
       score = time;
       clearInterval(timer);
+      inputScores.style.display = "block";
+      inputScores.style.color = "white";
+
       // Ask user for initials and save their score.
     } else {
       questionDiv.innerHTML = "";
       generateNextQuestion();
     }
   } else {
-    // GET HELP!!! Create an h2 that says correct or incorrect instead of an alert
+    //  Create an h3 that says correct or incorrect
     let result = document.createElement("h3");
     result.textContent = "Incorrect";
     questionDiv.appendChild(result);
@@ -169,8 +196,22 @@ function enterScore() {
     score: score,
   };
 
+  // Makes highscores visible upon saving your name
   scores.push(userScore);
   localStorage.setItem("scores", JSON.stringify(scores));
+  let scoreBoard = JSON.parse(localStorage.getItem("scores"));
+
+  for (let i = 0; i < scoreBoard.length; i++) {
+    let paragraph = document.createElement("p");
+    paragraph.innerHTML = scoreBoard[i].initials;
+    showInitials.appendChild(paragraph);
+  }
+
+  for (let i = 0; i < scoreBoard.length; i++) {
+    let paragraph2 = document.createElement("p");
+    paragraph2.innerHTML = scoreBoard[i].score;
+    viewScores.appendChild(score);
+  }
 }
 
 function displayScores(event) {
@@ -183,4 +224,3 @@ function displayScores(event) {
 
 startQuizbtn.addEventListener("click", startQuiz);
 saveScore.addEventListener("click", enterScore);
-// viewScores.addEventListener("click", displayScores);
